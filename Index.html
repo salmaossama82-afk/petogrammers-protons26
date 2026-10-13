@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>رفيق | Petogrammers</title>
+
+    <style>
+        :root {
+            --purple: #7667d9;
+            --pink: #f58eb4;
+            --blue: #dff5ff;
+            --dark: #292644;
+            --bg: #fbfaff;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        header {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            box-shadow: 0 3px 15px #ded9f455;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: var(--purple)
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap
+        }
+
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold
+        }
+
+        nav a:hover {
+            color: var(--purple)
+        }
+
+        .hero {
+            padding: 65px 7%;
+            background: linear-gradient(120deg, #ebe6ff, #e5f8ff, #ffeaf3);
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(29px, 4vw, 49px);
+            line-height: 1.4
+        }
+
+        .hero h1 span {
+            color: var(--purple)
+        }
+
+        .hero-art {
+            text-align: center;
+            font-size: 100px;
+            background: #ffffff80;
+            border-radius: 35px;
+            padding: 45px 10px;
+        }
+
+        section {
+            padding: 45px 7%;
+            scroll-margin-top: 90px
+        }
+
+        h2 {
+            color: #5749b6;
+            margin-top: 0
+        }
+
+        .panel,
+        .card {
+            background: white;
+            border: 1px solid #e9e5f5;
+            border-radius: 22px;
+            padding: 23px;
+            box-shadow: 0 8px 25px #7667d915;
+        }
+
+        .panel {
+            max-width: 850px;
+            margin: auto
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd7ee;
+            border-radius: 12px;
+            font: inherit;
+            background: white;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .full {
+            grid-column: 1/-1
+        }
+
+        button,
+        .btn {
+            border: 0;
+            background: var(--purple);
+            color: white;
+            padding: 11px 19px;
+            border-radius: 12px;
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover,
+        .btn:hover {
+            filter: brightness(.94)
+        }
+
+        button:disabled {
+            opacity: .6;
+            cursor: wait
+        }
+
+        .pink {
+            background: var(--pink)
+        }
+
+        .light {
+            background: #e9e5ff;
+            color: #51449f
+        }
+
+        .blue {
+            background: var(--blue);
+            color: #28556a
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 17px
+        }
+
+        #posts {
+            background: #f4f1ff
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+            margin-top: 20px;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #51449f
+        }
+
+        .card p {
+            overflow-wrap: anywhere;
+            white-space: pre-wrap
+        }
+
+        .tag {
+            display: inline-block;
+            background: #f0edff;
+            padding: 3px 11px;
+            border-radius: 30px;
+            margin: 5px 3px;
+            font-size: 13px;
+        }
+
+        .message {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: #f0edff;
+            display: none;
+        }
+
+        .message.ok {
+            display: block;
+            background: #e8f8ef;
+            color: #176c4c
+        }
+
+        .message.bad {
+            display: block;
+            background: #fff0f2;
+            color: #a43753
+        }
+
+        .message.info {
+            display: block
+        }
+
+        .comment {
+            background: #f7f5ff;
+            padding: 9px;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .details {
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 25px
+        }
+
+        @media(max-width:700px) {
+
+            .hero,
+            .grid,
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .hero-art {
+                font-size: 65px;
+                padding: 20px
+            }
+
+            section {
+                padding: 30px 5%
+            }
+
+            .full {
+                grid-column: auto
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">🐾 رفيق | Petogrammers</div>
+        <nav>
+            <a href="#home">الرئيسية</a>
+            <a href="#account">إنشاء حساب</a>
+            <a href="#new-post">إضافة بلاغ</a>
+            <a href="#posts">البلاغات</a>
+        </nav>
+    </header>
+
+    <div class="hero" id="home">
+        <div>
+            <h1>كل معلومة بتفرق في<br><span>العثور على حيوان مفقود 💜</span></h1>
+            <p>رفيق بيجمع بلاغات الحيوانات المفقودة واللي تم العثور عليها، عشان نساعد كل حيوان يرجع لبيته.</p>
+            <div class="actions">
+                <a class="btn" href="#posts">عرض البلاغات</a>
+                <a class="btn pink" href="#new-post">+ إضافة بلاغ</a>
+            </div>
+        </div>
+        <div class="hero-art">🐈 🐾 🐕</div>
+    </div>
+
+    <section id="account">
+        <div class="panel">
+            <h2>💜 إنشاء حساب</h2>
+            <p>اعملي حساب عشان تقدري تنشري بلاغ وتضيفي تعليقات.</p>
+
+            <form id="registerForm">
+                <div class="grid">
+                    <div>
+                        <label>اسم المستخدم</label>
+                        <input name="username" required maxlength="50">
+                    </div>
+                    <div>
+                        <label>البريد الإلكتروني</label>
+                        <input name="email" type="email" required>
+                    </div>
+                    <div>
+                        <label>رقم الهاتف (اختياري)</label>
+                        <input name="phone_number" type="tel">
+                    </div>
+                    <div>
+                        <label>كلمة المرور</label>
+                        <input name="password" type="password" required>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="registerButton">إنشاء الحساب</button>
+                </div>
+                <div id="registerMessage" class="message"></div>
+            </form>
+
+            <div id="currentUser" class="message"></div>
+        </div>
+    </section>
+
+    <section id="new-post">
+        <div class="panel">
+            <h2>🐾 نشر بلاغ جديد</h2>
+            <p>اكتبي معلومات الحيوان عشان تساعدي في العثور عليه.</p>
+
+            <form id="postForm">
+                <div class="grid">
+                    <div>
+                        <label>نوع البلاغ</label>
+                        <select name="post_type">
+                            <option value="lost">حيوان مفقود</option>
+                            <option value="found">تم العثور على حيوان</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>نوع الحيوان</label>
+                        <select name="animal_type">
+                            <option value="cat">قطة</option>
+                            <option value="dog">كلب</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>السلالة (اختياري)</label>
+                        <input name="breed" placeholder="مثال: بلدي">
+                    </div>
+
+                    <div>
+                        <label>اللون (اختياري)</label>
+                        <input name="color" placeholder="مثال: أبيض وبني">
+                    </div>
+
+                    <div>
+                        <label>المنطقة (اختياري)</label>
+                        <select name="district">
+                            <option value="">اختاري المنطقة</option>
+                            <option value="miami">ميامي</option>
+                            <option value="asafra">العصافرة</option>
+                            <option value="aboqir">أبو قير</option>
+                            <option value="sidi_beshr">سيدي بشر</option>
+                            <option value="sidi_gaber">سيدي جابر</option>
+                            <option value="elebrahimiya">الإبراهيمية</option>
+                            <option value="shatby">الشاطبي</option>
+                            <option value="alazarita">الأزاريطة</option>
+                            <option value="sporting">سبورتنج</option>
+                            <option value="moharam_bek">محرم بك</option>
+                            <option value="agamy">العجمي</option>
+                            <option value="fliming">فلمنج</option>
+                            <option value="elraml_station">محطة الرمل</option>
+                            <option value="bahary">بحري</option>
+                            <option value="elmanshia">المنشية</option>
+                        </select>
+                    </div>
+
+                    <div class="full">
+                        <label>وصف البلاغ</label>
+                        <textarea name="description" required
+                            placeholder="اكتبي وصف الحيوان وأي تفاصيل تساعد في العثور عليه"></textarea>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="pink" id="postButton">إرسال البلاغ</button>
+                    <button type="reset" class="light">مسح الحقول</button>
+                </div>
+                <div id="postMessage" class="message"></div>
+            </form>
+        </div>
+    </section>
+
+    <section id="posts">
+        <h2>🔎 البلاغات المنشورة</h2>
+        <p>هنا هتظهر البلاغات المحفوظة في قاعدة البيانات.</p>
+
+        <div class="actions">
+            <button onclick="setFilter('all')" class="light">كل البلاغات</button>
+            <button onclick="setFilter('lost')" class="blue">حيوانات مفقودة</button>
+            <button onclick="setFilter('found')" class="light">تم العثور عليها</button>
+            <button onclick="loadPosts()">↻ تحديث البلاغات</button>
+        </div>
+
+        <div id="postsMessage" class="message"></div>
+        <div id="postsGrid" class="cards"></div>
+    </section>
+
+    <footer>🐾 رفيق — كل رفيق يستاهل يرجع لبيته 💜</footer>
+
+    <script>
+        const API = "http://127.0.0.1:8000";
+        let currentUser = null;
+        let posts = [];
+        let currentFilter = "all";
+
+        const $ = id => document.getElementById(id);
+
+        function message(id, text, type = "info") {
+            const el = $(id);
+            el.textContent = text;
+            el.className = "message " + type;
+        }
+
+        async function request(path, options = {}) {
+            let response;
+            try {
+                response = await fetch(API + path, {
+                    ...options,
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(options.headers || {})
+                    }
+                });
+            } catch (error) {
+                throw new Error("مش قادرين نوصل للباك. اتأكدي إنه شغال على بورت 8000.");
+            }
+
+            const data = await response.json().catch(() => null);
+
+            if (!response.ok) {
+                let detail = data?.detail || "حصل خطأ رقم " + response.status;
+                if (Array.isArray(detail)) {
+                    detail = detail.map(x => x.msg).join("، ");
+                }
+                throw new Error(detail);
+            }
+            return data;
+        }
+
+        function showUser() {
+            if (!currentUser) return;
+            message(
+                "currentUser",
+                "أهلًا " + currentUser.username +
+                " 💜 رقم حسابك: " + currentUser.user_id,
+                "ok"
+            );
+        }
+
+        $("registerForm").addEventListener("submit", async e => {
+            e.preventDefault();
+            const btn = $("registerButton");
+            const form = new FormData(e.target);
+
+            const payload = {
+                username: form.get("username").trim(),
+                email: form.get("email").trim(),
+                phone_number: form.get("phone_number")?.trim() || null,
+                password: form.get("password")
+            };
+
+            btn.disabled = true;
+            message("registerMessage", "جاري إنشاء الحساب...");
+
+            try {
+                const user = await request("/users/register", {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+
+                currentUser = {
+                    user_id: user.user_id,
+                    username: user.username
+                };
+
+                localStorage.setItem("rafeeqUser", JSON.stringify(currentUser));
+                message("registerMessage", "تم إنشاء الحساب بنجاح 💜", "ok");
+                showUser();
+                e.target.querySelector('[name="password"]').value = "";
+            } catch (error) {
+                message("registerMessage", error.message, "bad");
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        $("postForm").addEventListener("submit", async e => {
+            e.preventDefault();
+
+            if (!currentUser?.user_id) {
+                message("postMessage", "اعملي حساب الأول قبل نشر البلاغ.", "bad");
+                return;
+            }
+
+            const btn = $("postButton");
+            const form = new FormData(e.target);
+
+            const payload = {
+                post_type: form.get("post_type"),
+                animal_type: form.get("animal_type"),
+                breed: form.get("breed")?.trim() || null,
+                color: form.get("color")?.trim() || null,
+                description: form.get("description")?.trim()
+            };
+
+            const district = form.get("district");
+            if (district) payload.district = district;
+
+            if (!payload.description) {
+                message("postMessage", "اكتبي وصف البلاغ الأول.", "bad");
+                return;
+            }
+
+            btn.disabled = true;
+            message("postMessage", "جاري إرسال البلاغ...");
+
+            try {
+                const post = await request(
+                    "/posts/?user_id=" + encodeURIComponent(currentUser.user_id),
+                    {
+                        method: "POST",
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                message(
+                    "postMessage",
+                    "تم نشر البلاغ رقم " + post.post_id + " بنجاح 💜",
+                    "ok"
+                );
+
+                e.target.reset();
+                currentFilter = "all";
+                await loadPosts();
+            } catch (error) {
+                message("postMessage", error.message, "bad");
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        function setFilter(type) {
+            currentFilter = type;
+            renderPosts();
+        }
+
+        async function loadPosts() {
+            message("postsMessage", "جاري تحميل البلاغات...");
+
+            try {
+                posts = await request("/posts/?skip=0&limit=100");
+                message("postsMessage", "", "info");
+                $("postsMessage").style.display = "none";
+                renderPosts();
+            } catch (error) {
+                message("postsMessage", error.message, "bad");
+            }
+        }
+
+        function renderPosts() {
+            const grid = $("postsGrid");
+            grid.replaceChildren();
+
+            const filtered = posts.filter(p =>
+                currentFilter === "all" || p.post_type === currentFilter
+            );
+
+            if (!filtered.length) {
+                const empty = document.createElement("div");
+                empty.className = "card";
+                empty.textContent = "لسه مفيش بلاغات من النوع ده 🐾";
+                grid.append(empty);
+                return;
+            }
+
+            filtered.forEach(post => {
+                const card = document.createElement("article");
+                card.className = "card";
+
+                const title = document.createElement("h3");
+                title.textContent =
+                    (post.animal_type === "dog" ? "🐕 " : "🐈 ") +
+                    (post.post_type === "lost" ? "حيوان مفقود" : "تم العثور على حيوان");
+
+                const id = document.createElement("small");
+                id.textContent = "رقم البلاغ: " + post.post_id;
+
+                const description = document.createElement("p");
+                description.textContent = post.description || "لا يوجد وصف";
+
+                const meta = document.createElement("div");
+                [
+                    post.breed && "السلالة: " + post.breed,
+                    post.color && "اللون: " + post.color,
+                    post.district && "المنطقة: " + post.district,
+                    post.status && "الحالة: " + post.status
+                ].filter(Boolean).forEach(value => {
+                    const tag = document.createElement("span");
+                    tag.className = "tag";
+                    tag.textContent = value;
+                    meta.append(tag);
+                });
+
+                const button = document.createElement("button");
+                button.className = "light";
+                button.textContent = "التفاصيل والتعليقات";
+
+                const details = document.createElement("div");
+                details.className = "details";
+                details.hidden = true;
+
+                button.onclick = async () => {
+                    if (!details.hidden) {
+                        details.hidden = true;
+                        button.textContent = "التفاصيل والتعليقات";
+                        return;
+                    }
+
+                    button.disabled = true;
+                    try {
+                        const fullPost = await request("/posts/" + post.post_id);
+                        showDetails(details, fullPost);
+                        details.hidden = false;
+                        button.textContent = "إخفاء التفاصيل";
+                    } catch (error) {
+                        alert(error.message);
+                    } finally {
+                        button.disabled = false;
+                    }
+                };
+
+                card.append(title, id, description, meta, button, details);
+                grid.append(card);
+            });
+        }
+
+        function showDetails(container, post) {
+            container.replaceChildren();
+
+            const heading = document.createElement("h4");
+            heading.textContent = "💬 التعليقات";
+            container.append(heading);
+
+            const comments = Array.isArray(post.comments) ? post.comments : [];
+
+            if (!comments.length) {
+                const empty = document.createElement("p");
+                empty.textContent = "لسه مفيش تعليقات.";
+                container.append(empty);
+            }
+
+            comments.forEach(comment => {
+                const div = document.createElement("div");
+                div.className = "comment";
+                div.textContent =
+                    "مستخدم " + comment.user_id + ": " + comment.content;
+                container.append(div);
+            });
+
+            const form = document.createElement("form");
+            const input = document.createElement("input");
+            input.placeholder = "اكتبي تعليقك هنا";
+            input.required = true;
+            input.maxLength = 2000;
+
+            const button = document.createElement("button");
+            button.textContent = "إرسال التعليق";
+            button.style.marginTop = "10px";
+
+            form.append(input, button);
+
+            form.onsubmit = async e => {
+                e.preventDefault();
+
+                if (!currentUser?.user_id) {
+                    alert("اعملي حساب الأول عشان تضيفي تعليق.");
+                    return;
+                }
+
+                if (!input.value.trim()) return;
+
+                button.disabled = true;
+
+                try {
+                    await request(
+                        "/posts/" + post.post_id +
+                        "/comments?user_id=" + encodeURIComponent(currentUser.user_id),
+                        {
+                            method: "POST",
+                            body: JSON.stringify({ content: input.value.trim() })
+                        }
+                    );
+
+                    const updated = await request("/posts/" + post.post_id);
+                    showDetails(container, updated);
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    button.disabled = false;
+                }
+            };
+
+            container.append(form);
+        }
+
+        try {
+            currentUser = JSON.parse(localStorage.getItem("rafeeqUser"));
+            showUser();
+        } catch (e) {
+            currentUser = null;
+        }
+
+        loadPosts();
+    </script>
+
+</body>
+
+</html>
